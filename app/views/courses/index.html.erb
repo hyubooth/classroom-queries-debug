@@ -10,7 +10,7 @@
       Title
     </label>
 
-    <input type="text" id="title_b" name="q_title">
+    <input type="text" id="title_box" name="q_title">
   </div>
 
   <div>
@@ -35,7 +35,7 @@
     </select>
   </div>
 
-  <button>
+  <button type="submit">
     Create course
   </button>
 </form>
@@ -79,12 +79,17 @@
       </td>
 
       <td>
-        <% department = department.where({ :id => course.department_id }).at(0) %>
-        <a href="/departments/<%= department.id %>"><%= department.name %></a>
+        <% department = Department.find_by(id: course.department_id) %>
+        <% if department %>
+          <a href="/departments/<%= department.id %>"><%= department.name %></a>
+        <% else %>
+          <em>Unknown department</em>
+        <% end %>
+
       </td>
 
       <td>
-        <a href="/courses/<%= @course.id %>">
+        <a href="/courses/<%= course.id %>">
           Show details
         </a>
       </td>
